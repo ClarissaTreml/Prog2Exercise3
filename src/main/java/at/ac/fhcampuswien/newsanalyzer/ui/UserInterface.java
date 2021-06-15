@@ -2,31 +2,37 @@ package at.ac.fhcampuswien.newsanalyzer.ui;
 
 
 import at.ac.fhcampuswien.newsanalyzer.ctrl.Controller;
+import at.ac.fhcampuswien.newsapi.enums.Category;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class UserInterface 
+public class UserInterface
 {
 	private Controller ctrl = new Controller();
 
 	public void getDataFromCtrl1(){
-		System.out.println("ABC");
 
-		ctrl.process();
+		ctrl.process("corona", Category.health); //category from enums    after programming Controller
 	}
 
 	public void getDataFromCtrl2(){
 		// TODO implement me
+		ctrl.process("kino", Category.entertainment);
+
 	}
 
 	public void getDataFromCtrl3(){
 		// TODO implement me
+		ctrl.process("apple", Category.technology);
 	}
 	
 	public void getDataForCustomInput() {
 		// TODO implement me
+		System.out.println("Gewünschtes Query bitte eingeben: ");
+		String query = readLine();
+		ctrl.process(query,null);
 	}
 
 

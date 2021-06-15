@@ -10,7 +10,7 @@ import java.util.List;
 
 public class NewsAPIExample {
 
-    public static final String APIKEY = "myKey";    //TODO add your api key
+    public static final String APIKEY = "da7b634eb3504b9abbf3e2395b286c83";    //TODO add your api key
 
     public static void main(String[] args){
 

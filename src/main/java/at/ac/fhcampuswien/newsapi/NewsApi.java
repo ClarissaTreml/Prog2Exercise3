@@ -121,10 +121,14 @@ public class NewsApi {
         try {
             obj = new URL(url);
         } catch (MalformedURLException e) {
+
             // TODO improve ErrorHandling
-            e.printStackTrace();
+            System.err.println("Malformed URL "+e.getMessage());//
+            return null;//
+
+            //e.printStackTrace(); this was before
         }
-        HttpURLConnection con;
+        HttpURLConnection con = null;//had to initialize the connection
         StringBuilder response = new StringBuilder();
         try {
             con = (HttpURLConnection) obj.openConnection();
@@ -135,53 +139,65 @@ public class NewsApi {
             }
             in.close();
         } catch (IOException e) {
+
             // TODO improve ErrorHandling
-            System.out.println("Error "+e.getMessage());
+            System.out.println("Error "+e.getMessage());//this was before
+
+            if(con != null){ //if the connection ist not null then disconnect
+                con.disconnect();//
+            }
         }
         return response.toString();
     }
 
     protected String buildURL() {
         // TODO ErrorHandling
-        String urlbase = String.format(NEWS_API_URL,getEndpoint().getValue(),getQ(),getApiKey());
-        StringBuilder sb = new StringBuilder(urlbase);
+        try {//
+            String urlbase = String.format(NEWS_API_URL, getEndpoint().getValue(), getQ(), getApiKey());
+            StringBuilder sb = new StringBuilder(urlbase);
 
-        System.out.println(urlbase);
+            System.out.println(urlbase);
 
-        if(getFrom() != null){
-            sb.append(DELIMITER).append("from=").append(getFrom());
+            if (getFrom() != null) {
+                sb.append(DELIMITER).append("from=").append(getFrom());
+            }
+            if (getTo() != null) {
+                sb.append(DELIMITER).append("to=").append(getTo());
+            }
+            if (getPage() != null) {
+                sb.append(DELIMITER).append("page=").append(getPage());
+            }
+            if (getPageSize() != null) {
+                sb.append(DELIMITER).append("pageSize=").append(getPageSize());
+            }
+            if (getLanguage() != null) {
+                sb.append(DELIMITER).append("language=").append(getLanguage());
+            }
+            if (getSourceCountry() != null) {
+                sb.append(DELIMITER).append("country=").append(getSourceCountry());
+            }
+            if (getSourceCategory() != null) {
+                sb.append(DELIMITER).append("category=").append(getSourceCategory());
+            }
+            if (getDomains() != null) {
+                sb.append(DELIMITER).append("domains=").append(getDomains());
+            }
+            if (getExcludeDomains() != null) {
+                sb.append(DELIMITER).append("excludeDomains=").append(getExcludeDomains());
+            }
+            if (getqInTitle() != null) {
+                sb.append(DELIMITER).append("qInTitle=").append(getqInTitle());
+            }
+            if (getSortBy() != null) {
+                sb.append(DELIMITER).append("sortBy=").append(getSortBy());
+            }
+            return sb.toString();
+
+
+        } catch (Exception e){//
+            System.out.println("Error: "+e.getMessage());//
+            return null;//
         }
-        if(getTo() != null){
-            sb.append(DELIMITER).append("to=").append(getTo());
-        }
-        if(getPage() != null){
-            sb.append(DELIMITER).append("page=").append(getPage());
-        }
-        if(getPageSize() != null){
-            sb.append(DELIMITER).append("pageSize=").append(getPageSize());
-        }
-        if(getLanguage() != null){
-            sb.append(DELIMITER).append("language=").append(getLanguage());
-        }
-        if(getSourceCountry() != null){
-            sb.append(DELIMITER).append("country=").append(getSourceCountry());
-        }
-        if(getSourceCategory() != null){
-            sb.append(DELIMITER).append("category=").append(getSourceCategory());
-        }
-        if(getDomains() != null){
-            sb.append(DELIMITER).append("domains=").append(getDomains());
-        }
-        if(getExcludeDomains() != null){
-            sb.append(DELIMITER).append("excludeDomains=").append(getExcludeDomains());
-        }
-        if(getqInTitle() != null){
-            sb.append(DELIMITER).append("qInTitle=").append(getqInTitle());
-        }
-        if(getSortBy() != null){
-            sb.append(DELIMITER).append("sortBy=").append(getSortBy());
-        }
-        return sb.toString();
     }
 
     public NewsResponse getNews() {
@@ -200,6 +216,8 @@ public class NewsApi {
             }
         }
         //TODO improve Errorhandling
+        //  ?? what to do??
+
         return newsReponse;
     }
 }
