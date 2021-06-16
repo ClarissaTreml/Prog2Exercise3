@@ -193,7 +193,6 @@ public class NewsApi {
             }
             return sb.toString();
 
-
         } catch (Exception e){//
             System.out.println("Error: "+e.getMessage());//
             return null;//

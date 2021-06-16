@@ -33,10 +33,19 @@ public class Controller {
 		NewsApi newsApi;//start
 
 		if (category != null){
-			newsApi = new NewsApiBuilder().setApiKey(APIKEY).setQ(query).setEndPoint(Endpoint.TOP_HEADLINES).setSourceCountry(Country.at).setSourceCategory(category).createNewsApi();
+			newsApi = new NewsApiBuilder()
+					.setApiKey(APIKEY)
+					.setQ(query)
+					.setEndPoint(Endpoint.TOP_HEADLINES).setSourceCountry(Country.at)
+					.setSourceCategory(category)
+					.createNewsApi();
 		}
 		else{
-			newsApi = new NewsApiBuilder().setApiKey(APIKEY).setQ(query).setEndPoint(Endpoint.TOP_HEADLINES).createNewsApi();
+			newsApi = new NewsApiBuilder()
+					.setApiKey(APIKEY)
+					.setQ(query)
+					.setEndPoint(Endpoint.TOP_HEADLINES)
+					.createNewsApi();
 		}
 		NewsResponse newsResponse = null;
 
@@ -54,45 +63,41 @@ public class Controller {
 				return;
 			}
 			//5a											//had to import stream Collectors
-			String provider = articles.stream().collect(Collectors.groupingBy(article -> article.getSource().getName(),
-					Collectors.counting())).entrySet().stream().max(Comparator.comparingInt(t-> t.getValue().intValue())).get().getKey();
+			String provider = articles
+					.stream()
+					.collect(Collectors.groupingBy(article -> article.getSource().getName(),
+					Collectors.counting()))
+					.entrySet()
+					.stream()
+					.max(Comparator.comparingInt(t-> t.getValue().intValue()))
+					.get()
+					.getKey();
 
 			if (provider != null)
 				System.out.println("Provider with max articles: "+provider);
 
 			//5b
-			String author = articles.stream().filter(article -> Objects.nonNull(article.getAuthor())).min(Comparator.comparingInt(article -> article.getAuthor().length())).get().getAuthor();
+			String author = articles
+					.stream()
+					.filter(article -> Objects.nonNull(article.getAuthor()))
+					.min(Comparator.comparingInt(article -> article.getAuthor().length()))
+					.get()
+					.getAuthor();
 
 			if (author != null)
 				System.out.println("Author with shortest name: "+author);
 
 			//5d
-			List<Article> sortedArticles = articles.stream().sorted(Comparator.comparingInt(article -> article.getTitle().length())).sorted(Comparator.comparing(Article::getTitle)).collect(Collectors.toList());
+			List<Article> sortedArticles = articles
+					.stream()
+					.sorted(Comparator.comparingInt(article -> article.getTitle().length()))
+					.sorted(Comparator.comparing(Article::getTitle))
+					.collect(Collectors.toList());
 
 			System.out.println("First article of sorted List: "+sortedArticles.get(0));
-
-			for (Article article : articles){
-				try{
-					URL url = new URL(article.getUrl()); //had to import URL class
-					InputStream inputStream = url.openStream();
-					BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-					BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(article.getTitle().substring(0,10)+ "html"));
-					String line = bufferedReader.readLine();
-					while (line != null){
-						bufferedWriter.write(line);
-					}
-					bufferedReader.close();
-					bufferedWriter.close();
-				}
-				catch (Exception e){
-					System.err.println("Failed to save webpage: "+e.getMessage());
-				}
-			}
 		}
-
 		System.out.println("End process");
 	}
-	
 
 	public Object getData() {
 		

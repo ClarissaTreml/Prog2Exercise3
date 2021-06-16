@@ -19,13 +19,13 @@ public class UserInterface
 
 	public void getDataFromCtrl2(){
 		// TODO implement me
-		ctrl.process("kino", Category.entertainment);
+		ctrl.process("ai", Category.technology);
 
 	}
 
 	public void getDataFromCtrl3(){
 		// TODO implement me
-		ctrl.process("apple", Category.technology);
+		ctrl.process("euro", Category.sports);
 	}
 	
 	public void getDataForCustomInput() {
@@ -39,9 +39,9 @@ public class UserInterface
 	public void start() {
 		Menu<Runnable> menu = new Menu<>("User Interface");
 		menu.setTitle("Wählen Sie aus:");
-		menu.insert("a", "Choice ABC", this::getDataFromCtrl1);
-		menu.insert("b", "Choice DEF", this::getDataFromCtrl2);
-		menu.insert("c", "Choice 3", this::getDataFromCtrl3);
+		menu.insert("a", "Choice HEALTH", this::getDataFromCtrl1);
+		menu.insert("b", "Choice TECHNOLOGY", this::getDataFromCtrl2);
+		menu.insert("c", "Choice SPORTS", this::getDataFromCtrl3);
 		menu.insert("d", "Choice User Input:",this::getDataForCustomInput);
 		menu.insert("q", "Quit", null);
 		Runnable choice;
