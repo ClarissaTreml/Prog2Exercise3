@@ -217,4 +217,7 @@ public class Article {
                 ", additionalProperties=" + additionalProperties +
                 '}';
     }
+
+
+
 }

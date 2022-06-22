@@ -32,19 +32,19 @@ public class Controller {
 		//Schnittstelle anpassen   3a
 		NewsApi newsApi;//start
 
-		if (category != null){
+		if (category == null){
 			newsApi = new NewsApiBuilder()
 					.setApiKey(APIKEY)
 					.setQ(query)
-					.setEndPoint(Endpoint.TOP_HEADLINES).setSourceCountry(Country.at)
-					.setSourceCategory(category)
+					.setEndPoint(Endpoint.TOP_HEADLINES)
 					.createNewsApi();
 		}
 		else{
 			newsApi = new NewsApiBuilder()
 					.setApiKey(APIKEY)
 					.setQ(query)
-					.setEndPoint(Endpoint.TOP_HEADLINES)
+					.setEndPoint(Endpoint.TOP_HEADLINES).setSourceCountry(Country.at)
+					.setSourceCategory(category)
 					.createNewsApi();
 		}
 		NewsResponse newsResponse = null;
@@ -95,12 +95,35 @@ public class Controller {
 					.collect(Collectors.toList());
 
 			System.out.println("First article of sorted List: "+sortedArticles.get(0));
+
 		}
+
 		System.out.println("End process");
+
 	}
 
+
 	public Object getData() {
-		
+
 		return null;
 	}
+
 }
+
+
+/*for (Article article : articles){
+		try{
+		URL url = new URL(article.getUrl()); //had to import URL class
+		InputStream inputStream = url.openStream();
+		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+		BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(article.getTitle().substring(0,10)+ "html"));
+		String line = bufferedReader.readLine();
+		while (line != null){
+		bufferedWriter.write(line);
+		}
+		bufferedReader.close();
+		bufferedWriter.close();
+		}
+		catch (Exception e){
+		System.err.println("Failed to save webpage: "+e.getMessage());
+		}*/
